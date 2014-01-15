@@ -3,10 +3,12 @@ var http = require('http');
 var body = '<?xml version="1.0" encoding="utf-8"?>' +
            '<someRequest></someRequest>';
 
+// http://shrouded-woodland-1421.herokuapp.com/
+
 var postRequest = {
-    host: "localhost",
+    host: 'shrouded-woodland-1421.herokuapp.com',
     path: "/",
-    port: 8000,
+    port: 80,
     method: "POST",
     headers: {
         
