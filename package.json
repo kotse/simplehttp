@@ -1,0 +1,24 @@
+{
+  "name": "simplehttp",
+  "version": "0.0.0",
+  "description": "cool stuff needed for work :)",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kotse/simplehttp.git"
+  },
+  "keywords": [
+    "simple",
+    "http",
+    "heroku"
+  ],
+  "author": "kotseto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kotse/simplehttp/issues"
+  },
+  "homepage": "https://github.com/kotse/simplehttp"
+}
