@@ -4,26 +4,34 @@
 var http = require('http');
 var port = process.env.PORT || 8000;
  
+var http = require('http');
 var counter = 0;
- 
-http.createServer(function (req, res) {
-  	
-  	// increment the counter for each visitor request
-  	counter=counter+1;
- 
-	var path = req.url;
-	console.log("requested=" + path + " counter=" + counter);
- 
+
+
+var server = http.createServer(function (req, res) {
+  // req is an http.IncomingMessage, which is a Readable Stream
+  // res is an http.ServerResponse, which is a Writable Stream
+
+  var body = '';
+  // we want to get the data as utf8 strings
+  // If you don't set an encoding, then you'll get Buffer objects
+  req.setEncoding('utf8');
+
+  // Readable streams emit 'data' events once a listener is added
+  req.on('data', function (chunk) {
+    body += chunk;
+  })
+
+  // the end event tells you that you have entire body
+  req.on('end', function () {
+
+	counter++;
+	console.log(body);
+
 	res.writeHead(200, {'Content-Type': 'text/html'}); // prepare response headers
- 
-	if (path == "/") {
-		res.end("Hello World. You are requestor # " + counter + ".<br><a href='/page2'>Page 2</a>\n");
- 
-	} else if (path == "/page2") {
-		res.end("This is page 2. <a href='/'>Back.</a>\n"); // send response and close connection	
-	}
- 
-}).listen(port);
- 
-// console info message
+    res.end("requestor # " + counter + ": request was : " + body);
+  })
+})
+
 console.log('Server running at http://127.0.0.1:' + port);
+server.listen(port);
