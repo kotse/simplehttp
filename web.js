@@ -1,20 +1,21 @@
-// Create a HTTP server on port 8000
-// Send plain text headers and 'Hello World' to each client
- 
+var express = require('express');
+var https = require('https');
 var http = require('http');
-var port = process.env.PORT || 8000;
- 
-var http = require('http');
+var fs = require('fs');
+var port = "443";
 var counter = 0;
 
+var app = express();
 
-var server = http.createServer(function (req, res) {
-  // req is an http.IncomingMessage, which is a Readable Stream
-  // res is an http.ServerResponse, which is a Writable Stream
+var options = {
+  key: fs.readFileSync('keys/privatekey.pem'),
+  cert: fs.readFileSync('keys/certificate.pem')
+};
 
+https.createServer(options, app).listen(port);
+
+app.post('/', function(req, res) {
   var body = '';
-  // we want to get the data as utf8 strings
-  // If you don't set an encoding, then you'll get Buffer objects
   req.setEncoding('utf8');
 
   // Readable streams emit 'data' events once a listener is added
@@ -24,14 +25,14 @@ var server = http.createServer(function (req, res) {
 
   // the end event tells you that you have entire body
   req.on('end', function () {
+    counter++;
+    console.log(body);
 
-	counter++;
-	console.log(body);
+    var bodyResp = 'Hello visitor #' + counter + '; your request was ' + body;
+    res.setHeader('Content-Type', 'text/plain');
+    res.setHeader('Content-Length', Buffer.byteLength(bodyResp));
+    res.end(bodyResp);
+  });
+});
 
-	res.writeHead(200, {'Content-Type': 'text/html'}); // prepare response headers
-    res.end("requestor # " + counter + ": request was : " + body);
-  })
-})
-
-console.log('Server running at http://127.0.0.1:' + port);
-server.listen(port);
+console.log('Server is now running');

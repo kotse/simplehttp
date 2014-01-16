@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/kotse/simplehttp/issues"
   },
-  "homepage": "https://github.com/kotse/simplehttp"
+  "homepage": "https://github.com/kotse/simplehttp",
+  "dependencies": {
+    "express": "3.x"
+  }
 }

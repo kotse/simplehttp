@@ -1,25 +1,28 @@
-var http = require('http');
+var https = require('https');
 
 var body = '<?xml version="1.0" encoding="utf-8"?>' +
            '<someRequest></someRequest>';
 
-// http://shrouded-woodland-1421.herokuapp.com/
+// var host = "http://shrouded-woodland-1421.herokuapp.com"
+// var port = 443;
+var host = "localhost";
+var port = 8443;
 
 var postRequest = {
-    host: 'shrouded-woodland-1421.herokuapp.com',
+    host: host,
     path: "/",
-    port: 80,
+    port: port,
     method: "POST",
     headers: {
-        
         'Content-Type': 'text/xml',
         'Content-Length': Buffer.byteLength(body)
-    }
+    },
+    rejectUnauthorized: false
 };
 
 var buffer = "";
 
-var req = http.request( postRequest, function( res )    {
+var req = https.request( postRequest, function( res )    {
 
    console.log( res.statusCode );
    var buffer = "";
